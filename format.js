@@ -105,5 +105,10 @@ export const zeroDefault = value => value||'0.00'
 
 export const zeroPercentDefault = value => value||'0.00%'
 
+// 格式化为千分位展示数字 
+export const numThousandSeparator = num => {
+  return (num.toString().indexOf ('.') !== -1) ? num.toLocaleString() : num.toString().replace(/(\d)(?=(?:\d{3})+$)/g, '$1,')
+}
+
 
 
