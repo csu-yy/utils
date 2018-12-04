@@ -1,114 +1,76 @@
 
-import moment from 'moment'
-
-export const toDate = value => {
-  if (!value) {
-    return '-'
+// 带K/M/G单位的字符串转为Byte值
+export const convertByteSize = (sizeString) => {
+  sizeString = sizeString + ''
+  const type = sizeString.substr(sizeString.length - 1, 1)
+  let numSize = parseInt(sizeString, 10)
+  switch (type) {
+    case 'g':
+    case 'G':
+      numSize = numSize * 1024 * 1024 * 1024
+      break
+    case 'm':
+    case 'M':
+      numSize = numSize * 1024 * 1024
+      break
+    case 'k':
+    case 'K':
+      numSize = numSize * 1024
+      break
+    default:
+      break
   }
-  const date = new Date(value);
-  const year = date.getFullYear();
-  const month = (date.getMonth() + 1 < 10) ? '0' + ~~(date.getMonth() + 1) : date.getMonth() + 1;
-  const day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
-  const hour = date.getHours() < 10 ? '0' + date.getHours() : date.getHours();
-  const minute = date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes();
-  const second = date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds();
-  return `${year}-${month}-${day} ${hour}:${minute}:${second}`
+  return numSize;
 }
 
-export const toPercent = value=>{
-  return  value ? (parseFloat(value)*100).toFixed(2) + '%' : ''
-}
-
-export const toYuan = (value=0, postfix=0) =>{
-  if(value){
-    value = parseFloat(value)/100000;
-    let strValue = value + '';
-    if(strValue.indexOf('.')>-1){
-      value = value.toFixed(2)
-    }
-    value += postfix;
+// 带S/M/H单位的字符串转为秒数值
+export const convertSecondDuration = (durationString) => {
+  durationString = durationString + '';
+  const type = durationString.substr(durationString.length - 1, 1);
+  let numDuration = parseInt(durationString, 10)
+  switch (type) {
+  case 's':
+  case 'S':
+    numDuration = numDuration;
+    break;
+  case 'm':
+  case 'M':
+    numDuration = numDuration * 60
+    break;
+  case 'h':
+  case 'H':
+    numDuration = numDuration * 60 * 60
+    break;
+  default:
+    break;
   }
-
-
-  return  parseFloat(value)
+  return numDuration;
 }
 
-export const toYuanSign = (value=0) =>{
-    if(value){
-        value = parseFloat(value)/100000;
-        let strValue = value + '';
-        if(strValue.indexOf('.')>-1){
-            value = value.toFixed(2)
-        }
-        value = '\uffe5' + value;
-    }
-    return  value;
-}
-
-export const dateformat = (date, format) => {
-    date = new Date(date);
-
-    let map = {
-        "M": date.getMonth() + 1, //月份
-        "d": date.getDate(), //日
-        "h": date.getHours(), //小时
-        "m": date.getMinutes(), //分
-        "s": date.getSeconds(), //秒
-        "q": Math.floor((date.getMonth() + 3) / 3), //季度
-        "S": date.getMilliseconds() //毫秒
-    };
-
-    format = format.replace(/([yMdhmsqS])+/g, function(all, t) {
-        let v = map[t];
-        if (v !== undefined) {
-            if (all.length > 1) {
-                v = '0' + v;
-                v = v.substr(v.length - 2);
-            }
-            return v;
-        } else if (t === 'y') {
-            return (date.getFullYear() + '').substr(4 - all.length);
-        }
-        return all;
-    });
-
-    return format;
-}
-
-export const getAllDate = (startDate, endDate) => {
-    let resultArr = [];
-
-    let ab = startDate.split("-");
-    let ae = endDate.split("-");
-    let db = new Date();
-    db.setUTCFullYear(ab[0], ab[1] - 1, ab[2]);
-    let de = new Date();
-    de.setUTCFullYear(ae[0], ae[1] - 1, ae[2]);
-    let unixDb = db.getTime();
-    let unixDe = de.getTime();
-
-    resultArr.push(startDate);
-    for (let k = unixDb + 24 * 60 * 60 * 1000; k < unixDe;) {
-        resultArr.push(dateformat((new Date(parseInt(k))), 'yyyy-MM-dd'));
-        k = k + 24 * 60 * 60 * 1000;
-    }
-    resultArr.push(endDate);
-
-    return resultArr;
-}
-
-export const toText = (value, list, key, targetKey) => (list.find(item => item[key] == value) ? list.find(item => item[key] == value)[targetKey] : '-');
-
-export const toDay = timeStamp=>moment(timeStamp).format('YYYY-MM-DD')
-
-export const zeroDefault = value => value||'0.00'
-
-export const zeroPercentDefault = value => value||'0.00%'
 
 // 格式化为千分位展示数字 
 export const numThousandSeparator = num => {
   return (num.toString().indexOf ('.') !== -1) ? num.toLocaleString() : num.toString().replace(/(\d)(?=(?:\d{3})+$)/g, '$1,')
 }
+
+
+// 四舍五入保留n位小数，如：2，会在2后面补上00.即2.00
+export const toDecimal = (num,n) => {
+  var f = parseFloat(num);    
+  if (isNaN(f)) { return false; }
+  var f = Math.round(num*100)/100;
+  var s = f.toString();
+  var rs = s.indexOf('.');
+  if (rs < 0) {
+      rs = s.length;
+      s += '.';
+  }
+  while (s.length <= rs + n) {
+    s += '0';
+  }
+  return s;
+}
+
 
 
 
