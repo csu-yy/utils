@@ -9,7 +9,9 @@ export const isEmpty = obj => {
     for (const key in obj) {
         return false;
     }
-
+    // JSON.stringify(obj) === '{}'
+    // ES6 新增的方法 Object.keys(): 方法会返回一个由一个给定对象的自身可枚举属性组成的数组
+    // Object.keys(obj).length === 0
     return typeof obj === 'object';
 }
 
