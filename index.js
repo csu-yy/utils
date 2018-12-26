@@ -244,6 +244,20 @@ const getRandomNumber = (start, end)=>{
   return Math.floor(Math.random()*(end-start)) + start
 }
 
+// str的字符长度计算 英文占1个字符长度 汉字为2个字符长度
+export const cnLen = (str) => {
+  var len = 0;
+  if (str) {
+    for (var i = 0; i < str.length; i++) {
+      if (str.charCodeAt(i) > 127 || str.charCodeAt(i) == 94) {
+        len += 2;
+      } else {
+        len++;
+      }
+    }
+  }
+  return len;
+}
 
 
 
