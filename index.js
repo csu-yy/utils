@@ -270,6 +270,22 @@ export getRandomColor = () => {
   return '#' + rgb.join('')
 }
 
+// 根据月份返回所属季度
+export const myQuarter = (month) => {
+  switch (month) {
+    case 3:
+      return 1;
+    case 6:
+      return 2;
+    case 9:
+      return 3;
+    case 12:
+      return 4;
+    default:
+      return Math.floor(month/3 + 1);
+  }
+}
+
 
 
 
