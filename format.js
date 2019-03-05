@@ -49,8 +49,25 @@ export const convertSecondDuration = (durationString) => {
 
 
 // 格式化为千分位展示数字 
-export const numThousandSeparator = num => {
+/*export const numThousandSeparator = num => {
   return (num.toString().indexOf ('.') !== -1) ? num.toLocaleString() : num.toString().replace(/(\d)(?=(?:\d{3})+$)/g, '$1,')
+}*/
+
+// 格式化为千分位展示数字 
+export const formatNumber(value) {
+  value += '';
+  const list = value.split('.');
+  const prefix = list[0].charAt(0) === '-' ? '-' : '';
+  let num = prefix ? list[0].slice(1) : list[0];
+  let result = '';
+  while (num.length > 3) {
+    result = `,${num.slice(-3)}${result}`;
+    num = num.slice(0, num.length - 3);
+  }
+  if (num) {
+    result = num + result;
+  }
+  return `${prefix}${result}${list[1] ? `.${list[1]}` : ''}`;
 }
 
 
