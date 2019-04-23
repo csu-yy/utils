@@ -286,6 +286,33 @@ export const myQuarter = (month) => {
   }
 }
 
+// 根据秒值换算成“时:分:秒”形式
+export const realFormatSecond = (second) => {
+  const secondType = typeof second
+  if (secondType === 'number' || secondType === 'string') {
+    second = parseInt(second)
+
+    const hours = Math.floor(second / 3600)
+    second = second - hours * 3600
+    const mimute = Math.floor(second / 60)
+    second = second - mimute * 60
+
+    return hours + ':' + ('0' + mimute).slice(-2) + ':' + ('0' + second).slice(-2)
+  }
+  return '0:00:00'
+}
+
+// 获取当前鼠标位置
+export const getMousePos = (event) => {
+  const e = event || window.event;
+  const scrollX = document.documentElement.scrollLeft || document.body.scrollLeft;
+  const scrollY = document.documentElement.scrollTop || document.body.scrollTop;
+  const x = e.pageX || e.clientX + scrollX;
+  const y = e.pageY || e.clientY + scrollY;
+  //alert('x: ' + x + '\ny: ' + y);
+  return {'x': x, 'y': y};
+}
+
 
 
 
