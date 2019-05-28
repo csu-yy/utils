@@ -20,3 +20,47 @@ export const regHtml = (htmlStr) => {
   })
   return result
 }
+
+// 去掉所有的html标签，只返回文本
+export const delHtmlTag = (htmlStr) => {
+  return htmlStr.replace(/<[^>]+>/g,"");
+}
+
+// 获取当前鼠标位置
+export const getMousePos = (event) => {
+  const e = event || window.event;
+  const scrollX = document.documentElement.scrollLeft || document.body.scrollLeft;
+  const scrollY = document.documentElement.scrollTop || document.body.scrollTop;
+  const x = e.pageX || e.clientX + scrollX;
+  const y = e.pageY || e.clientY + scrollY;
+  //alert('x: ' + x + '\ny: ' + y);
+  return {'x': x, 'y': y};
+}
+
+// 传入XXXX秒 格式化为 00:00:00
+export const realFormatSecond = (second) => {
+  const secondType = typeof second
+  if (secondType === 'number' || secondType === 'string') {
+    second = parseInt(second)
+
+    const hours = Math.floor(second / 3600)
+    second = second - hours * 3600
+    const mimute = Math.floor(second / 60)
+    second = second - mimute * 60
+
+    return hours + ':' + ('0' + mimute).slice(-2) + ':' + ('0' + second).slice(-2)
+  }
+  return '0:00:00'
+}
+
+// 验证el是否在可视区域内
+export const elementIsInViewport = (el, offset = 0) => {
+  if (!el) { return false; }
+  const box = el.getBoundingClientRect(),
+        top = (box.top >= 0),
+        left = (box.left >= 0),
+        bottom = (box.bottom <= (window.innerHeight || document.documentElement.clientHeight) + offset),
+        right = (box.right <= (window.innerWidth || document.documentElement.clientWidth) + offset);
+  return (top && left && bottom && right);
+}
+
