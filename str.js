@@ -22,8 +22,18 @@ export const regHtml = (htmlStr) => {
 }
 
 // 去掉所有的html标签，只返回文本
-export const delHtmlTag = (htmlStr) => {
-  return htmlStr.replace(/<[^>]+>/g,"");
+export const delHtmlTag = (htmlStr, deep) => {
+  if (!htmlStr) {
+    return ''
+  }
+  if (deep) {
+    htmlStr = htmlStr.replace(/(^\s*)|(\s*$)/g, ""); 
+    htmlStr = htmlStr.replace(/\s+/g,"");   // 去掉空格
+    htmlStr = htmlStr.replace(/[ ]/g,"");   // 去掉空格
+    htmlStr = htmlStr.replace(/[\r\n]/g,"");// 去掉回车换行
+    return htmlStr
+  }
+  return htmlStr.replace(/<[^>]+>/g, "");
 }
 
 // 获取当前鼠标位置
