@@ -27,6 +27,7 @@ export const delHtmlTag = (htmlStr, deep) => {
     return ''
   }
   if (deep) {
+    htmlStr = htmlStr.replace(/<[^>]+>/g, "")
     htmlStr = htmlStr.replace(/(^\s*)|(\s*$)/g, ""); 
     htmlStr = htmlStr.replace(/\s+/g,"");   // 去掉空格
     htmlStr = htmlStr.replace(/[ ]/g,"");   // 去掉空格
