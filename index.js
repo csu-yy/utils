@@ -180,6 +180,15 @@ export const loadScript = (url, callback) => {
   document.getElementsByTagName("head")[0].appendChild(script);
 }
 
+// 动态加载css
+export function loadCss(url){
+  let css = document.createElement('link');
+  css.href = url;
+  css.rel = 'stylesheet';
+  css.type = 'text/css';
+  document.head.appendChild(css);
+}
+
 /**
  * @Description:      兼容性处理事件绑定
  * @示例:
@@ -312,6 +321,19 @@ export const getMousePos = (event) => {
   //alert('x: ' + x + '\ny: ' + y);
   return {'x': x, 'y': y};
 }
+
+// 获取一个随机字符 len：随机字符长度
+export const randomString = (len) => {
+  len = len || 16;
+  var chars = 'abcdefghijklmnopqrstuvwxyz';
+  var maxPos = chars.length;
+  var val = '';
+  for (let i = 0; i < len; i++) {
+    val += chars.charAt(Math.floor(Math.random() * maxPos));
+  }
+  return 'ch' + val;
+}
+
 
 
 
