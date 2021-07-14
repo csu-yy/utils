@@ -253,6 +253,19 @@ const getRandomNumber = (start, end)=>{
   return Math.floor(Math.random()*(end-start)) + start
 }
 
+// 参数min为随机数最小值 max为随机数最大值 得到的随机数范围为[min,max]
+const getRandom = (min, max) => {
+  return Math.floor(Math.random()*(max+1-min)+min)
+}
+
+//用于生成uuid
+function S4() {
+  return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
+}
+function guid() {
+  return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
+}
+
 // str的字符长度计算 英文占1个字符长度 汉字为2个字符长度
 export const cnLen = (str) => {
   var len = 0;

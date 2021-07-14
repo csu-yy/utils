@@ -92,3 +92,11 @@ export const getQueryObject = (url) => {
   return obj;
 }
 
+// 下划线（_）连接的字符串转换为驼峰形式
+function transformStr (str)  {
+  const strArr = str.split('_');
+  for(let i; i<strArr.length; i++) {
+    strArr[i] = strArr[i].charAt(0).toUpperCase()+strArr[i].substring(1)
+  }
+  return strArr.join('');
+}
