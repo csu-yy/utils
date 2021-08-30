@@ -57,6 +57,28 @@ export const compareItems = (list1, list2, compareBy) => {
   })
 }
 
+/**
+ * @description: 数组排序（时间正序positive或者倒序reverse）依赖一个大数比较的库 Big.js(npm install Big.js)
+ * @param {*} arrKey: 比较数组的key值
+ * @param {*} align: positive || reverse
+ * @return {*} 按照正序或者倒序的数组
+ * 使用： 
+ * const arr = [{time:'2021-09-09 11:11:11'},{time:'2021-09-19 11:11:13'}]
+ *  arr.sort(compare('time','positive'))
+ */
+// import Big from 'big.js';
+export const compare = (arrKey, align) => (a,b) => {
+  const v1 = a[arrKey];
+  const v2 = b[arrKey];
+  var x = new Big(new Date(v1).getTime())
+  var y = new Big(new Date(v2).getTime())
+  if (align ==='positive') {
+    return  x.minus(y)
+  } else {
+    return  y.minus(x)
+  }
+}
+
 
 
 

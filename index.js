@@ -282,7 +282,7 @@ export const cnLen = (str) => {
 }
 
 // 随机获取一个颜色值
-export getRandomColor = () => {
+export const getRandomColor = () => {
   const rgb = []
   for (let i = 0 ; i < 3; ++i){
     let color = Math.floor(Math.random() * 256).toString(16)
@@ -346,6 +346,95 @@ export const randomString = (len) => {
   }
   return 'ch' + val;
 }
+
+// // ********************* js判断客户端是PC端还是移动端访问 ******************* //
+// 方法1-推荐
+export const isPc = () => {
+  const userAgentInfo = navigator.userAgent;
+  const agents = ['Android', 'iPhone', 'SymbianOS', 'Windows Phone', 'iPad', 'iPod'];
+  let flag = true;
+  agents.some(i=>{
+    if (userAgentInfo.indexOf(i) > 0) {
+      flag = false;
+      return true;
+    }
+  })
+  return flag;
+}
+
+// 方法2
+export const browser={
+  versions:function(){ 
+    var u = navigator.userAgent, app = navigator.appVersion; 
+    return { //移动终端浏览器版本信息 
+      trident: u.indexOf('Trident') > -1,                             //IE内核
+      presto: u.indexOf('Presto') > -1,                               //opera内核
+      webKit: u.indexOf('AppleWebKit') > -1,                          //苹果、谷歌内核
+      gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1,     //火狐内核
+      mobile: !!u.match(/AppleWebKit.*Mobile.*/),                     //是否为移动终端
+      ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/),                //ios终端
+      android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1,  //android终端或者uc浏览器
+      iPhone: u.indexOf('iPhone') > -1 ,                              //是否为iPhone或者QQHD浏览器
+      iPad: u.indexOf('iPad') > -1,                                   //是否iPad  
+      webApp: u.indexOf('Safari') == -1,                              //是否web应该程序，没有头部与底部
+      weixin: u.indexOf('MicroMessenger') > -1,                       //是否微信 
+      qq: u.match(/\sQQ/i) == " qq"                                    //是否QQ
+    };
+  }(),
+  language:(navigator.browserLanguage || navigator.language).toLowerCase()
+} 
+/*
+// 使用方法  
+if(browser.versions.mobile || browser.versions.ios || browser.versions.android || 
+  browser.versions.iPhone || browser.versions.iPad){  	
+     window.location = "http://m.zhaizhainv.com";	
+} */
+
+// 方法3 摘自im- qq
+export const os = function() {
+  const ua = navigator.userAgent,
+  isWindowsPhone = /(?:Windows Phone)/.test(ua),
+  isSymbian = /(?:SymbianOS)/.test(ua) || isWindowsPhone, 
+  isAndroid = /(?:Android)/.test(ua), 
+  isFireFox = /(?:Firefox)/.test(ua), 
+  isChrome = /(?:Chrome|CriOS)/.test(ua),
+  isTablet = /(?:iPad|PlayBook)/.test(ua) || (isAndroid && !/(?:Mobile)/.test(ua)) || (isFireFox && /(?:Tablet)/.test(ua)),
+  isPhone = /(?:iPhone)/.test(ua) && !isTablet,
+  isPc = !isPhone && !isAndroid && !isSymbian;
+  return {
+    isTablet: isTablet,
+    isPhone: isPhone,
+    isAndroid : isAndroid,
+    isPc : isPc
+  };
+}();
+/* // 使用方法 
+if(os.isAndroid || os.isPhone){
+  alert("-----");
+} */
+
+
+// 方法4
+if(/AppleWebKit.*mobile/i.test(navigator.userAgent) || (/MIDP|SymbianOS|NOKIA|SAMSUNG|LG|NEC|TCL|Alcatel|BIRD|DBTEL|Dopod|PHILIPS|HAIER|LENOVO|MOT-|Nokia|SonyEricsson|SIE-|Amoi|ZTE/.test(navigator.userAgent))){
+  if(window.location.href.indexOf("?mobile")<0){
+    try{
+      if(/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)){
+        window.location.href="手机页面";
+      }else if(/iPad/i.test(navigator.userAgent)){
+        window.location.href="平板页面";
+      }else{
+        window.location.href="其他移动端页面"
+      }
+    }catch(e){}
+  }
+}
+
+// 如果你只在乎的其实只是界面的大小，可参考如下代码
+export const detectMobile = () => {
+  return window.innerWidth <=800 && window.innerHeight <=600;
+}
+
+// // ********************* js判断客户端是PC端还是移动端访问 ******************* //
 
 
 
