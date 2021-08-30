@@ -347,7 +347,7 @@ export const randomString = (len) => {
   return 'ch' + val;
 }
 
-// // ********************* js判断客户端是PC端还是移动端访问 ******************* //
+// ********************* js判断客户端是PC端还是移动端访问 ******************* //
 // 方法1-推荐
 export const isPc = () => {
   const userAgentInfo = navigator.userAgent;
@@ -434,7 +434,9 @@ export const detectMobile = () => {
   return window.innerWidth <=800 && window.innerHeight <=600;
 }
 
-// // ********************* js判断客户端是PC端还是移动端访问 ******************* //
+// 终极版 可使用 detectMobileBrowser.js
+
+// ********************* js判断客户端是PC端还是移动端访问 ******************* //
 
 
 
